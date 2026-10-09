@@ -14,16 +14,16 @@ const BestSeller = () => {
 
   return (
     <div className="my-10">
-      <div className="text-center text-3xl py-8">
+      <div className="text-center text-3xl py-8 ">
         <Title text1={"BEST"} text2={"SELLERS"} />
-        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
-       "The Hall of Fame. No fluff, no guessing games—just the products that sell out first, every single time. Our Best Sellers are the ultimate proof of quality and style. If you're new here, this is your starting line. If you're a regular, you know the drill: grab them before they're gone (again). Shop the hits
-        </p>
+        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600 ">
+The pieces everyone wants, and they sell out first.{" "}
+  Grab yours before they're gone.       </p>
       </div>
 
       {/**  display products */}
 
-      <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
+      <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-10 sm:mt-5">
         {bestSeller.map((item, index) => (
           <ProductItem
             key={index}

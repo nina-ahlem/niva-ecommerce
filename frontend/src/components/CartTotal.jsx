@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 
-export const FREE_SHIPPING_FROM = 1000; // set your own threshold
+export const FREE_SHIPPING_FROM = 10000; // set your own threshold
 
 // `children` lets a page add extra content inside the card (e.g. a button)
 // `className` lets a page add layout classes (e.g. sticky positioning)
