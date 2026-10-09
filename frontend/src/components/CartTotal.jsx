@@ -1,38 +1,46 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
-import Title from "./Title";
 
-const CartTotal = () => {
+export const FREE_SHIPPING_FROM = 1000; // set your own threshold
+
+// `children` lets a page add extra content inside the card (e.g. a button)
+// `className` lets a page add layout classes (e.g. sticky positioning)
+const CartTotal = ({ children, className = "" }) => {
   const { delivery_fee, currency, getCartAmount } = useContext(ShopContext);
 
+  const subtotal = getCartAmount();
+  const shipping =
+    subtotal === 0 || subtotal >= FREE_SHIPPING_FROM ? 0 : delivery_fee;
+  const total = subtotal + shipping;
+
   return (
-    <div className="w-full">
-      <div className="text-2xl">
-        <Title text1={"CART"} text2={"TOTAL"} />
-      </div>
-      <div className="flex flex-col gap-2 mt-2 text-sm">
+    <div className={`w-full bg-gray-100 rounded-2xl p-6 ${className}`}>
+      <h2 className="text-lg font-semibold mb-4">Order summary</h2>
+
+      <div className="flex flex-col gap-3 text-base">
         <div className="flex justify-between">
-          <p>Subtotal</p>
-          <p>
-            {getCartAmount()}.00 {currency}
-          </p>
+          <span>Subtotal</span>
+          <span>
+            {subtotal.toFixed(2)} {currency}
+          </span>
         </div>
-        <hr />
+
         <div className="flex justify-between">
-          <p>Shipping Fee</p>
-          <p>
-            {delivery_fee} {currency}
-          </p>
+          <span>Shipping</span>
+          <span>
+            {shipping === 0 ? "Free" : `${shipping.toFixed(2)} ${currency}`}
+          </span>
         </div>
-        <hr />
-        <div className="flex justify-between">
-          <b>Total</b>
-          <b>
-            {getCartAmount() === 0 ? 0 : getCartAmount() + delivery_fee}{" "}
-            {currency}
-          </b>
+
+        <div className="flex justify-between font-bold text-lg mt-3 pt-3 border-t border-gray-300">
+          <span>Total</span>
+          <span>
+            {total.toFixed(2)} {currency}
+          </span>
         </div>
       </div>
+
+      {children}
     </div>
   );
 };

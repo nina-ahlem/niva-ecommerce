@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import assets from "../assets/assets";
 
-// Put all the images of the slideshow here (replace with your own names from assets.js)
 const heroImages = [assets.hero5, assets.hero2, assets.hero3];
 
 const SLIDE_DURATION = 3000; // 3 seconds
@@ -9,13 +8,12 @@ const SLIDE_DURATION = 3000; // 3 seconds
 const Hero = () => {
   const [current, setCurrent] = useState(0);
 
-  // Every time `current` changes, schedule the next change in 3 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrent((prev) => (prev + 1) % heroImages.length);
     }, SLIDE_DURATION);
 
-    // cleanup: cancel the timer if the component unmounts or `current` changes
+    
     return () => clearTimeout(timer);
   }, [current]);
 
@@ -40,7 +38,7 @@ const Hero = () => {
 
       {/* Hero right: slideshow */}
       {/* Fixed height: change these values to make the hero taller or shorter */}
-      <div className="relative w-full sm:w-1/2 min-w-0 overflow-hidden h-[300px] sm:h-[380px] lg:h-[480px] rounded-xl">
+      <div className="relative w-full sm:w-1/2 min-w-0 overflow-hidden h-[300px] sm:h-[380px] lg:h-[480px] rounded-b-xl sm:rounded-b-none sm:rounded-r-xl">
         {/* All images are stacked on top of each other, only the active one is visible */}
         <div className="h-full ">
           {heroImages.map((img, index) => (

@@ -1,14 +1,12 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
-
-const FREE_SHIPPING_FROM = 1000; // placeholder, set your own threshold
+import CartTotal, { FREE_SHIPPING_FROM } from "../components/CartTotal";
 
 const Cart = () => {
   const {
     products,
     currency,
-    delivery_fee,
     cartItems,
     updateQuantity,
     getCartAmount,
@@ -28,8 +26,6 @@ const Cart = () => {
 
   const count = getCartCount();
   const subtotal = getCartAmount();
-  const shipping = subtotal >= FREE_SHIPPING_FROM ? 0 : delivery_fee;
-  const total = subtotal + shipping;
   const remaining = FREE_SHIPPING_FROM - subtotal;
 
   if (cartData.length === 0) {
@@ -99,7 +95,11 @@ const Cart = () => {
                     <select
                       value={item.quantity}
                       onChange={(e) =>
-                        updateQuantity(item._id, item.size, Number(e.target.value))
+                        updateQuantity(
+                          item._id,
+                          item.size,
+                          Number(e.target.value),
+                        )
                       }
                       className="border-2 border-black rounded-md px-3 py-2 w-24 bg-white cursor-pointer"
                     >
@@ -118,8 +118,15 @@ const Cart = () => {
                       aria-label="Remove item"
                       className="p-2 hover:bg-gray-100 rounded-full"
                     >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                           stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      >
                         <path d="M5 5l14 14M19 5L5 19" />
                       </svg>
                     </button>
@@ -131,32 +138,19 @@ const Cart = () => {
         </div>
 
         {/* RIGHT: summary card */}
-        <aside className="bg-gray-100 rounded-2xl p-6 lg:sticky lg:top-24">
-          <div className="flex flex-col gap-3 text-base">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>{subtotal.toFixed(2)} {currency}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Shipping</span>
-              <span>
-                {shipping === 0 ? "Free" : `${shipping.toFixed(2)} ${currency}`}
-              </span>
-            </div>
-            <div className="flex justify-between font-bold text-lg mt-3 pt-3 border-t border-gray-300">
-              <span>Total</span>
-              <span>{total.toFixed(2)} {currency}</span>
-            </div>
-          </div>
+        <aside className="lg:sticky lg:top-24">
+          <CartTotal>
+            <button
+              onClick={() => navigate("/place-order")}
+              className="mt-6 w-full bg-black text-white rounded-full py-4 font-semibold hover:bg-gray-800 active:bg-gray-700"
+            >
+              Place Order
+            </button>
 
-          <button
-            onClick={() => navigate("/place-order")}
-            className="mt-6 w-full bg-black text-white rounded-full py-4 font-semibold hover:bg-gray-800 active:bg-gray-700"
-          >
-            Checkout
-          </button>
-
-          <p className="mt-5 text-sm text-gray-600">Cash on delivery available</p>
+            <p className="mt-5 text-sm text-gray-600">
+              Cash on delivery available
+            </p>
+          </CartTotal>
         </aside>
       </div>
     </div>

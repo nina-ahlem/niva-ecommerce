@@ -186,7 +186,7 @@ const Collection = () => {
               }}
               className="text-sm underline text-gray-600 hover:text-black"
             >
-              Effacer les filtres
+              Remove filters
             </button>
           )}
         </div>
